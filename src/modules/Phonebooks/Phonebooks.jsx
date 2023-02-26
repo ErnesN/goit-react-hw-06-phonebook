@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import PhonebooksForm from './PhonebooksForm/PhonebooksForm';
@@ -6,24 +5,25 @@ import PhonebookList from './PhonebookList/PhonebookList';
 import PhonebooksFilter from './PhonebooksFilter/PhonebooksFilter';
 import MyFavoriteContacts from './MyFavoriteContacts/MyFavoriteContacts';
 
-import { addContact, deleteContact } from 'redux/actions';
-
+import { addContact, deleteContact, setFilter } from 'redux/actions';
+import {
+  getAllContacts,
+  getFilteredContacts,
+  getFilter,
+} from 'redux/selectors';
 import styles from './phonebooks.module.scss';
 
 const Phonebooks = () => {
-  const contacts = useSelector(store => store.contacts);
-  const [filter, setFilter] = useState('');
+  const filteredContacts = useSelector(getFilteredContacts);
+  const allContacts = useSelector(getAllContacts);
+  const filter = useSelector(getFilter);
 
   const dispatch = useDispatch();
-
-  // useEffect(() => {
-  //   localStorage.setItem('my-contacts', JSON.stringify(contacts));
-  // }, [contacts]);
 
   const isDublicate = (name, number) => {
     const normalizedTitle = name.toLowerCase();
     const normalizedAuthor = number.toLowerCase();
-    const result = contacts.find(({ name, number }) => {
+    const result = allContacts.find(({ name, number }) => {
       return (
         name.toLowerCase() === normalizedTitle &&
         number.toLowerCase() === normalizedAuthor
@@ -39,31 +39,16 @@ const Phonebooks = () => {
       return false;
     }
 
-    const action = addContact({ name, number, favorite });
-    dispatch(action);
+    dispatch(addContact({ name, number, favorite }));
   };
 
   const handleDeleteContact = id => {
-    const action = deleteContact(id);
-    dispatch(action);
+    dispatch(deleteContact(id));
   };
-  const handleFilter = ({ target }) => setFilter(target.value);
-  const getFilteredContacts = () => {
-    if (!filter) {
-      return contacts;
-    }
-
-    const normalizedFilter = filter.toLowerCase();
-    const result = contacts.filter(({ name, number }) => {
-      return (
-        name.toLowerCase().includes(normalizedFilter) ||
-        number.toLowerCase().includes(normalizedFilter)
-      );
-    });
-
-    return result;
+  const handleFilter = ({ target }) => {
+    dispatch(setFilter(target.value));
   };
-  const filteredContacts = getFilteredContacts();
+
   const isContacts = Boolean(filteredContacts.length);
 
   return (
@@ -74,7 +59,7 @@ const Phonebooks = () => {
       </div>
       <div className={styles.block}>
         <MyFavoriteContacts />
-        <PhonebooksFilter handleChange={handleFilter} />
+        <PhonebooksFilter value={filter} handleChange={handleFilter} />
         {isContacts && (
           <PhonebookList
             removeContact={handleDeleteContact}

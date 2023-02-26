@@ -1,12 +1,10 @@
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
+import { getFavoriteContacts } from 'redux/selectors';
 import styles from '../PhonebookList/phonebook-list.module.scss';
 
 const MyFavoriteContacts = () => {
-  const contacts = useSelector(store => {
-    const favoriteContacts = store.contacts.filter(({ favorite }) => favorite);
-    return favoriteContacts;
-  });
+  const contacts = useSelector(getFavoriteContacts);
   const myFavoriteContacts = contacts.map(({ id, name, number }) => (
     <li key={id} className={styles.item}>
       {name}: {number}.
