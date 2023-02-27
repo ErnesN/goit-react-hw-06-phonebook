@@ -9,19 +9,20 @@ const PhonebooksForm = ({ onSubmit }) => {
   const [state, setState] = useState({ ...initialState });
 
   const handleChange = ({ target }) => {
-    const { name, value } = target;
+    const { name, value, type, checked } = target;
+    const newValue = type === 'checkbox' ? checked : value;
     setState(prevState => {
-      return { ...prevState, [name]: value };
+      return { ...prevState, [name]: newValue };
     });
   };
 
   const handleSubmit = e => {
     e.preventDefault();
-    onSubmit({ name, number });
+    onSubmit({ ...state });
     setState({ ...initialState });
   };
 
-  const { name, number } = state;
+  const { name, number, favorite } = state;
 
   return (
     <form onSubmit={handleSubmit}>
@@ -43,6 +44,15 @@ const PhonebooksForm = ({ onSubmit }) => {
           value={number}
           onChange={handleChange}
           placeholder="Enter number"
+        />
+      </div>
+      <div>
+        <label>Favorite</label>
+        <input
+          name="favorite"
+          checked={favorite}
+          onChange={handleChange}
+          type="checkbox"
         />
       </div>
       <button className={styles.btn} type="submit">

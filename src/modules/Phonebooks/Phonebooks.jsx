@@ -7,7 +7,10 @@ import MyFavoriteContacts from './MyFavoriteContacts/MyFavoriteContacts';
 
 import { addContact, deleteContact } from 'redux/contacts/contacts-slice';
 import { setFilter } from 'redux/filter/filter-slice';
-import { getAllContacts, getFilteredContacts } from 'redux/contact-selectors';
+import {
+  getAllContacts,
+  getFilteredContacts,
+} from 'redux/contacts/contacts-selectors';
 import { getFilter } from 'redux/filter/filter-selectors';
 import styles from './phonebooks.module.scss';
 

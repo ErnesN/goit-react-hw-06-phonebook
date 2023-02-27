@@ -1,20 +1,20 @@
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { getFavoriteContacts } from 'redux/contacts-selectors';
+import { getFavoriteContacts } from 'redux/contacts/contacts-selectors';
 import styles from '../PhonebookList/phonebook-list.module.scss';
 
-const MyFavoriteContacts = () => {
+const MyFavoriteContacts = ({ removeContact }) => {
   const contacts = useSelector(getFavoriteContacts);
   const myFavoriteContacts = contacts.map(({ id, name, number }) => (
     <li key={id} className={styles.item}>
       {name}: {number}.
-      {/* <button
+      <button
         className={styles.btn}
         onClick={() => removeContact(id)}
         type="button"
       >
         Delete
-      </button> */}
+      </button>
     </li>
   ));
   return (
