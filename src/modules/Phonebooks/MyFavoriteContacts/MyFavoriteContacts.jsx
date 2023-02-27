@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { getFavoriteContacts } from 'redux/selectors';
+import { getFavoriteContacts } from 'redux/contacts-selectors';
 import styles from '../PhonebookList/phonebook-list.module.scss';
 
 const MyFavoriteContacts = () => {

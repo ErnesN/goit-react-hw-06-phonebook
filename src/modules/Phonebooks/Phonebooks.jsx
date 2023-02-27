@@ -5,12 +5,10 @@ import PhonebookList from './PhonebookList/PhonebookList';
 import PhonebooksFilter from './PhonebooksFilter/PhonebooksFilter';
 import MyFavoriteContacts from './MyFavoriteContacts/MyFavoriteContacts';
 
-import { addContact, deleteContact, setFilter } from 'redux/actions';
-import {
-  getAllContacts,
-  getFilteredContacts,
-  getFilter,
-} from 'redux/selectors';
+import { addContact, deleteContact } from 'redux/contacts/contacts-slice';
+import { setFilter } from 'redux/filter/filter-slice';
+import { getAllContacts, getFilteredContacts } from 'redux/contact-selectors';
+import { getFilter } from 'redux/filter/filter-selectors';
 import styles from './phonebooks.module.scss';
 
 const Phonebooks = () => {

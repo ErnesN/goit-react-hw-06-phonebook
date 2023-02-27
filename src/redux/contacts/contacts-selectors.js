@@ -1,4 +1,3 @@
-export const getAllContacts = store => store.contacts;
 export const getFavoriteContacts = ({ contacts }) => {
   const favoriteContacts = contacts.filter(({ favorite }) => favorite);
   return favoriteContacts;
@@ -18,4 +17,3 @@ export const getFilteredContacts = ({ contacts, filter }) => {
 
   return result;
 };
-export const getFilter = ({ filter }) => filter;
